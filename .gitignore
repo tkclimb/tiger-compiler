@@ -1,0 +1,5 @@
+.stack-work/
+tiger-compiler.cabal
+*~
+.vscode/
+examples/
