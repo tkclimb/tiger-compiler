@@ -1,20 +1,17 @@
-{-# LANGUAGE OverloadedStrings #-}
+module Lib (doParse) where
 
-module Lib
-    ( doParse
-    )
-where
-
-import           Parser                         ( parse )
-import           Lexer                          ( alexScanTokens
-                                                , prettyToken
-                                                , printTokens
-                                                )
-import qualified Data.Text                     as T
-import qualified Data.Text.IO                  as T
+import Data.Typeable
+import Parser (parse)
+import Lexer  (alexScanTokens,
+               printTokens)
+import Semantics (transExpr)
+import Env (baseVEnv, baseTEnv)
 
 doParse = do
     s <- getContents
     let tokens = alexScanTokens s
-    let ast = parse tokens
+    let ast    = parse tokens
+    putStrLn ("type of ast is " ++ (show (typeOf ast)))
+    let exprty =  transExpr baseVEnv baseTEnv ast
+    print exprty
     print ast

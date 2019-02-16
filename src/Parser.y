@@ -13,49 +13,49 @@ import qualified Ast as A
 %error { parseError }
 
 %token
-while   { While $$ }
-for     { For $$ }
-to      { To _ }
-break   { Break $$ }
-let     { Let $$ }
-in      { In _ }
-end     { End _ }
-function { Function _ }
-var     { Var _ }
-type    { Type $$ }
-array   { Array $$ }
-if      { If $$ }
-then    { Then _ }
-else    { Else _ }
-do      { Do _ }
-of      { Of _ }
-nil     { Nil _ }
-','     { Comma _ }
-':'     { Colon _ }
-';'     { Semicolon _ }
-'('     { Lparen _ }
-')'     { Rparen _ }
-'['     { Lbrack $$ }
-']'     { Rbrack _ }
-'{'     { Lbrace $$ }
-'}'     { Rbrace _ }
-'.'     { Dot $$ }
-'+'     { Plus $$ }
-'-'     { Minus $$ }
-'*'     { Times $$ }
-'/'     { Divide $$ }
-'='     { Eq $$ }
-'<>'    { Neq $$ }
-'<'     { Lt $$ }
-'<='    { Le $$ }
-'>'     { Gt $$ }
-'>='    { Ge $$ }
-'&'     { And $$ }
-'|'     { Or $$ }
-':='    { Assign $$ }
-STRING  { Strliteral $$ }
-INT     { Intliteral $$ }
-ID      { Id $$ }
+  while   { While $$ }
+  for     { For $$ }
+  to      { To _ }
+  break   { Break $$ }
+  let     { Let $$ }
+  in      { In _ }
+  end     { End _ }
+  function { Function _ }
+  var     { Var _ }
+  type    { Type $$ }
+  array   { Array $$ }
+  if      { If $$ }
+  then    { Then _ }
+  else    { Else _ }
+  do      { Do _ }
+  of      { Of _ }
+  nil     { Nil _ }
+  ','     { Comma _ }
+  ':'     { Colon _ }
+  ';'     { Semicolon _ }
+  '('     { Lparen _ }
+  ')'     { Rparen _ }
+  '['     { Lbrack $$ }
+  ']'     { Rbrack _ }
+  '{'     { Lbrace $$ }
+  '}'     { Rbrace _ }
+  '.'     { Dot $$ }
+  '+'     { Plus $$ }
+  '-'     { Minus $$ }
+  '*'     { Mul $$ }
+  '/'     { Div $$ }
+  '='     { Eq $$ }
+  '<>'    { Neq $$ }
+  '<'     { Lt $$ }
+  '<='    { Le $$ }
+  '>'     { Gt $$ }
+  '>='    { Ge $$ }
+  '&'     { And $$ }
+  '|'     { Or $$ }
+  ':='    { Assign $$ }
+  STRING  { Str $$ }
+  INT     { Int $$ }
+  ID      { Id $$ }
 
 %right    of
 %nonassoc do
@@ -111,8 +111,8 @@ exp:            lvalue                                          { A.VarExpr $1 }
  |              ID '(' args ')'                                 { callexp $1 $3 }
  |              exp '+' exp                                     { opexp A.PlusOp $1 $3 $2 }
  |              exp '-' exp                                     { opexp A.MinusOp $1 $3 $2 }
- |              exp '*' exp                                     { opexp A.TimesOp $1 $3 $2 }
- |              exp '/' exp                                     { opexp A.DivideOp $1 $3 $2 }
+ |              exp '*' exp                                     { opexp A.MulOp $1 $3 $2 }
+ |              exp '/' exp                                     { opexp A.DivOp $1 $3 $2 }
  |              exp '=' exp                                     { opexp A.EqOp $1 $3 $2 }
  |              exp '<>' exp                                    { opexp A.NeqOp $1 $3 $2 }
  |              exp '<' exp                                     { opexp A.LtOp $1 $3 $2 }

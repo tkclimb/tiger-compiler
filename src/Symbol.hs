@@ -1,14 +1,10 @@
 module Symbol where
 
-import qualified Data.Map as Map
+import qualified Data.Map                      as M
 
 type Symbol = String
-type Table = Map.Map Symbol
+type Table = M.Map Symbol
 
-empty = Map.empty
-insert table s v = Map.insert s v table
-lookup table s = Map.lookup s table
-
-
-
-
+empty = M.empty
+insert table s v = M.insert s v table
+lookup table s = M.lookup s table

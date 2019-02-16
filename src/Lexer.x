@@ -49,8 +49,8 @@ nil                     {(\p s -> Nil p)}
 "."                     {(\p s -> Dot p)}
 "+"                     {(\p s -> Plus p)}
 "-"                     {(\p s -> Minus p)}
-"*"                     {(\p s -> Times p)}
-"/"                     {(\p s -> Divide p)}
+"*"                     {(\p s -> Mul p)}
+"/"                     {(\p s -> Div p)}
 "="                     {(\p s -> Eq p)}
 "<>"                    {(\p s -> Neq p)}
 "<"                     {(\p s -> Lt p)}
@@ -61,10 +61,10 @@ nil                     {(\p s -> Nil p)}
 "|"                     {(\p s -> Or p)}
 ":="                    {(\p s -> Assign p)}
 
-\" \"                   {(\p s -> Strliteral (p, unquot s))}
-\" ([^\"]|\\ \")* \"    {(\p s -> Strliteral (p, unquot s))}
+\" \"                   {(\p s -> Str (p, unquot s))}
+\" ([^\"]|\\ \")* \"    {(\p s -> Str (p, unquot s))}
 
-$digit+                 {(\p s -> Intliteral (p, (read s :: Integer)))}
+$digit+                 {(\p s -> Int (p, (read s :: Integer)))}
 
 @id                     {(\p s -> Id (p, s))}
 
@@ -103,8 +103,8 @@ data Token =
      | Dot AlexPosn
      | Plus AlexPosn
      | Minus AlexPosn
-     | Times AlexPosn
-     | Divide AlexPosn
+     | Mul AlexPosn
+     | Div AlexPosn
      | Eq AlexPosn
      | Neq AlexPosn
      | Lt AlexPosn
@@ -115,8 +115,8 @@ data Token =
      | Or AlexPosn
      | Assign AlexPosn
      --
-     | Strliteral (AlexPosn, String)
-     | Intliteral (AlexPosn, Integer)
+     | Str (AlexPosn, String)
+     | Int (AlexPosn, Integer)
      | Id (AlexPosn, String)
      | Eof AlexPosn
        deriving (Eq, Show)
@@ -157,8 +157,8 @@ prettyToken c = tk ++ " at " ++ prettyAlexPosn pos where
      Dot p -> (".", p)
      Plus p -> ("+", p)
      Minus p -> ("-", p)
-     Times p -> ("*", p)
-     Divide p -> ("/", p)
+     Mul p -> ("*", p)
+     Div p -> ("/", p)
      Eq p -> ("=", p)
      Neq p -> ("<>", p)
      Lt p -> ("<", p)
@@ -169,8 +169,8 @@ prettyToken c = tk ++ " at " ++ prettyAlexPosn pos where
      Or p -> ("|", p)
      Assign p -> (":=", p)
      --
-     Strliteral (p, s) -> (show s, p)
-     Intliteral (p, i) -> (show i, p)
+     Str (p, s) -> (show s, p)
+     Int (p, i) -> (show i, p)
      Id (p, s) -> ("id:" ++ s, p)
      Eof p -> ("EOF", p)
 
